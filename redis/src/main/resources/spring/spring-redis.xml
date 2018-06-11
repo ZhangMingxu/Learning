@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!--Jedis连接池的相关配置-->
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <!--新版是maxTotal，旧版是maxActive-->
+        <property name="maxTotal" value="#{redis['redis.pool.maxActive']}"/>
+        <property name="maxIdle" value="#{redis['redis.pool.maxIdle']}"/>
+        <property name="testOnBorrow" value="true"/>
+        <property name="testOnReturn" value="true"/>
+    </bean>
+
+    <bean id="jedisPool" class="redis.clients.jedis.JedisPool">
+        <constructor-arg name="poolConfig" ref="jedisPoolConfig"/>
+        <constructor-arg name="host" value="#{redis['redis.host']}"/>
+        <constructor-arg name="port" value="#{redis['redis.port']}" type="int"/>
+        <constructor-arg name="timeout" value="#{redis['redis.timeout']}" type="int"/>
+        <constructor-arg name="password" value="#{redis['redis.password']}"/>
+        <constructor-arg name="database" value="#{redis['redis.database']}" type="int"/>
+    </bean>
+    <bean id="bloomFilter" class="com.xufree.learning.redis.BloomFilter">
+        <!--预计插入量 默认100000000-->
+        <property name="expectedInsertions" value="100000000"/>
+        <!--redis里面的key前缀 默认 bf:-->
+        <property name="redisKeyPrefix" value="bf:"/>
+        <!--允许的错误率-->
+        <property name="fpp" value="0.001"/>
+    </bean>
+
+
+</beans>
