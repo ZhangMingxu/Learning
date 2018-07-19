@@ -1,8 +1,9 @@
 package com.xufree.learning.java.concurrent;
 
+import com.xufree.learning.util.SleepUtil;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 验证Java线程优先级在什么系统上可以起作用
@@ -33,7 +34,7 @@ public class Priority {
             thread.start();
         }
         noStart = false;
-        TimeUnit.SECONDS.sleep(10);
+        SleepUtil.second(10);
         noEnd = false;
         for (Job job : jobs) {
             System.out.println("Job Priority:" + job.priority + "  job count:" + job.count);

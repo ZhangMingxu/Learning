@@ -12,6 +12,7 @@
         <module>redis</module>
         <module>hadoop-book</module>
         <module>java</module>
+        <module>util</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -22,6 +23,7 @@
         <slf4j.version>1.7.25</slf4j.version>
         <log4j.version>2.9.1</log4j.version>
         <commons-lang3.version>3.7</commons-lang3.version>
+        <servlet.version>3.1.0</servlet.version>
         <!--插件版本-->
         <maven-enforcer-plugin.version>1.2</maven-enforcer-plugin.version>
         <maven-surefire-plugin.version>2.20.1</maven-surefire-plugin.version>
@@ -144,8 +146,16 @@
                 <version>${junit.version}</version>
                 <scope>test</scope>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>javax.servlet-api</artifactId>
+                <version>${servlet.version}</version>
+                <scope>provided</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
+
     <build>
         <plugins>
             <!--设置jdk版本-->
