@@ -1,4 +1,4 @@
-package com.xufree.learning.java.concurrent;
+package com.xufree.learning.java.thread;
 
 import com.xufree.learning.util.SleepUtil;
 
