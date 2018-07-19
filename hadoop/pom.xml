@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>hadoop-book</artifactId>
+    <artifactId>hadoop</artifactId>
     <properties>
         <hadoop.version>3.1.0</hadoop.version>
         <hadoop-core.version>1.2.1</hadoop-core.version>
