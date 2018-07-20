@@ -45,15 +45,15 @@ public class BloomFilter {
 
     //计算hash函数个数
     private int optimalNumOfHashFunctions(long n, long m) {
-        return Math.max(1, (int) Math.round((double) m / (double) n * Math.log(2.0D)));
+        return Math.max(1, (int) Math.round((double) m / n * Math.log(2)));
     }
 
     //计算bit数组长度
     private long optimalNumOfBits(long n, double p) {
-        if (p == 0.0D) {
-            p = 4.9E-324D;
+        if (p == 0) {
+            p = Double.MIN_VALUE;
         }
-        return (long) ((double) (-n) * Math.log(p) / (Math.log(2.0D) * Math.log(2.0D)));
+        return (long) (-n * Math.log(p) / (Math.log(2) * Math.log(2)));
     }
 
     /**
