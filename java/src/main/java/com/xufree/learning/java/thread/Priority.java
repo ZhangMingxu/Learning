@@ -1,6 +1,7 @@
 package com.xufree.learning.java.thread;
 
-import com.xufree.learning.util.SleepUtil;
+import com.xufree.learning.common.annotation.TimeStatistics;
+import com.xufree.learning.common.util.SleepUtil;
 
 import java.util.ArrayList;
 import java.util.List;

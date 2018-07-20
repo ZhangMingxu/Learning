@@ -1,4 +1,4 @@
-package com.xufree.learning.util;
+package com.xufree.learning.common.util;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

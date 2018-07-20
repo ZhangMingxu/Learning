@@ -12,7 +12,7 @@
         <module>redis</module>
         <module>hadoop</module>
         <module>java</module>
-        <module>util</module>
+        <module>common</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -24,6 +24,7 @@
         <log4j.version>2.9.1</log4j.version>
         <commons-lang3.version>3.7</commons-lang3.version>
         <servlet.version>3.1.0</servlet.version>
+        <aspect.version>1.9.1</aspect.version>
         <!--插件版本-->
         <maven-enforcer-plugin.version>1.2</maven-enforcer-plugin.version>
         <maven-surefire-plugin.version>2.20.1</maven-surefire-plugin.version>
@@ -153,6 +154,19 @@
                 <version>${servlet.version}</version>
                 <scope>provided</scope>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/org.aspectj/aspectjrt -->
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjweaver</artifactId>
+                <version>${aspect.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.aspectj/aspectjrt -->
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjrt</artifactId>
+                <version>${aspect.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

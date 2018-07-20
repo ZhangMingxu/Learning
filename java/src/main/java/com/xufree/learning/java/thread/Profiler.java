@@ -1,8 +1,6 @@
 package com.xufree.learning.java.thread;
 
-import com.xufree.learning.util.SleepUtil;
-
-import java.util.concurrent.TimeUnit;
+import com.xufree.learning.common.util.SleepUtil;
 
 public class Profiler {
     private static final ThreadLocal<Long> TIME_THREADLOCAL = new ThreadLocal<Long>() {

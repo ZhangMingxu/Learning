@@ -2,9 +2,11 @@ package com.xufree.learning.redis;
 
 import com.google.common.hash.Funnels;
 import com.google.common.hash.Hashing;
+import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.Pipeline;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -13,10 +15,16 @@ public class BloomFilter {
     @Resource
     private JedisPool jedisPool;
     //预计插入量
-    private long expectedInsertions = 100000000;
+    private long expectedInsertions = 1000;
     //可接受的错误率
     private double fpp = 0.001F;
     private String redisKeyPrefix = "bf:";
+    private Jedis jedis;
+
+    @PostConstruct
+    public void init(){
+        this.jedis = jedisPool.getResource();
+    }
 
     public void setExpectedInsertions(long expectedInsertions) {
         this.expectedInsertions = expectedInsertions;
@@ -54,12 +62,12 @@ public class BloomFilter {
     public boolean isExist(String where, String key) {
         long[] indexs = getIndexs(key);
         boolean result;
-        Pipeline pipeline = jedisPool.getResource().pipelined();
+        Pipeline pipeline = jedis.pipelined();
         try {
             for (long index : indexs) {
                 pipeline.getbit(getRedisKey(where), index);
             }
-            result = !pipeline.exec().get().contains(false);
+            result = !pipeline.syncAndReturnAll().contains(false);
         } finally {
             try {
                 pipeline.close();
@@ -67,7 +75,7 @@ public class BloomFilter {
                 e.printStackTrace();
             }
         }
-        if (result) {
+        if (!result) {
             put(where, key);
         }
         return result;
@@ -78,12 +86,12 @@ public class BloomFilter {
      */
     private void put(String where, String key) {
         long[] indexs = getIndexs(key);
-        Pipeline pipeline = jedisPool.getResource().pipelined();
+        Pipeline pipeline = jedis.pipelined();
         try {
             for (long index : indexs) {
                 pipeline.setbit(getRedisKey(where), index, true);
             }
-            pipeline.exec();
+            pipeline.sync();
         } finally {
             try {
                 pipeline.close();

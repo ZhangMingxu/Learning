@@ -1,4 +1,4 @@
-package com.xufree.learning.util;
+package com.xufree.learning.common.util;
 
 
 import org.apache.http.client.methods.CloseableHttpResponse;

@@ -1,4 +1,4 @@
-package com.xufree.learning.util;
+package com.xufree.learning.common.util;
 
 import java.util.concurrent.TimeUnit;
 
