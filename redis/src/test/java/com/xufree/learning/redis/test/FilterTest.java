@@ -8,7 +8,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class FilterTest {
     @Test
     public void testFilter() {
-        ApplicationContext context = new ClassPathXmlApplicationContext("classpath:spring/applicationContext.xml");
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring/applicationContext.xml");
         BloomFilter filter = context.getBean("bloomFilter", BloomFilter.class);
         System.out.println(filter.isExist("aaa", "aaa"));
         System.out.println(filter.isExist("aaa", "bbb"));
