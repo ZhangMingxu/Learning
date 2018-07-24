@@ -5,38 +5,36 @@ import java.util.List;
 
 public class FullPermutation {
     public static void main(String[] args) {
-        String[] strings = new String[]{"1", "2","3"};
-        List<String> result = f(strings, strings.length - 1);
-        for (String s : result) {
-            System.out.println(s);
+        String[] strings = new String[]{"哎呀我去", "A", "3","askldjakldjlk"};
+        List<String[]> result = f(strings, strings.length - 1);
+        for (String[] s : result) {
+            for (String s1 : s) {
+                System.out.print(s1+" ");
+            }
+            System.out.print("\n");
         }
 
     }
 
-    private static List<String> f(String[] strings, int count) {
-        List<String> result = new ArrayList<>();
+    private static List<String[]> f(String[] strings, int count) {
+        List<String[]> result = new ArrayList<>();
         if (count == 0) {
-            result.add(strings[0]);
-            return result;
+            String[] s1 = {strings[0]};
+            result.add(s1);
         } else {
             int index = strings.length - count;
-            List<String> ss1 = f(strings, count - 1);
-            for (String s : ss1) {
+            List<String[]> ss1 = f(strings, count - 1);
+            for (String[] s : ss1) {
                 String next = strings[index];
-                char[] chars = s.toCharArray();
-                for (int i = 0; i < chars.length + 1; i++) {
-                    StringBuilder sb = new StringBuilder();
-                    for (int j = 0; j < i; j++) {
-                        sb.append(chars[j]);
-                    }
-                    sb.append(next);
-                    for (int j = i; j < chars.length; j++) {
-                        sb.append(chars[j]);
-                    }
-                    result.add(sb.toString());
+                for (int i = 0; i < s.length + 1; i++) {
+                    String[] temp = new String[s.length + 1];
+                    System.arraycopy(s, 0, temp, 0, i);
+                    temp[i] = next;
+                    System.arraycopy(s, i, temp, i + 1, s.length - i);
+                    result.add(temp);
                 }
             }
-            return result;
         }
+        return result;
     }
 }
