@@ -1,6 +1,6 @@
-package com.xufree.learning.redis.test;
+package com.xufree.learning.redis.filter.test;
 
-import com.xufree.learning.redis.BloomFilter;
+import com.xufree.learning.redis.filter.BloomFilter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;

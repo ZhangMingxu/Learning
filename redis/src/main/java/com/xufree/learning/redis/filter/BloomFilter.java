@@ -1,4 +1,4 @@
-package com.xufree.learning.redis;
+package com.xufree.learning.redis.filter;
 
 import com.google.common.hash.Funnels;
 import com.google.common.hash.Hashing;

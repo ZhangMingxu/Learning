@@ -22,13 +22,17 @@
         <constructor-arg name="password" value="#{redis['redis.password']}"/>
         <constructor-arg name="database" value="#{redis['redis.database']}" type="int"/>
     </bean>
-    <bean id="bloomFilter" class="com.xufree.learning.redis.BloomFilter">
+    <bean id="bloomFilter" class="com.xufree.learning.redis.filter.BloomFilter">
         <!--预计插入量 默认100000000-->
         <property name="expectedInsertions" value="100000000"/>
         <!--redis里面的key前缀 默认 bf:-->
         <property name="redisKeyPrefix" value="bf:"/>
         <!--允许的错误率-->
         <property name="fpp" value="0.001"/>
+    </bean>
+
+    <bean id="publisher" class="com.xufree.learning.redis.pubsub.Publisher">
+        <property name="topic" value="topic"/>
     </bean>
 
 

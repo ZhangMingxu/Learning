@@ -107,10 +107,6 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>net.sf.ehcache</groupId>
-            <artifactId>ehcache-core</artifactId>
-        </dependency>
         <!-- redis -->
         <dependency>
             <groupId>redis.clients</groupId>

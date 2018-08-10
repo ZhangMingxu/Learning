@@ -13,6 +13,7 @@
         <module>hadoop</module>
         <module>java</module>
         <module>common</module>
+        <module>flink</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
