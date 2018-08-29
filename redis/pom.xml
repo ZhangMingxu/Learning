@@ -12,9 +12,14 @@
     <artifactId>redis</artifactId>
     <properties>
         <redis.version>2.9.0</redis.version>
-        <guava.version>25.1-jre</guava.version>
     </properties>
     <dependencies>
+        <!--内部-->
+        <dependency>
+            <groupId>com.xufree.learning</groupId>
+            <artifactId>common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
         <!--spring-->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -112,12 +117,6 @@
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
             <version>${redis.version}</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>${guava.version}</version>
         </dependency>
 
     </dependencies>

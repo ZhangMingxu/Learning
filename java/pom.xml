@@ -22,6 +22,7 @@
     </properties>
 
     <dependencies>
+        <!--内部-->
         <dependency>
             <groupId>com.xufree.learning</groupId>
             <artifactId>common</artifactId>

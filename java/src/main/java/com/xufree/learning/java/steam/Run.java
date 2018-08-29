@@ -23,9 +23,7 @@ public class Run {
 //
 //        }).map(TestVO::getName).collect(Collectors.toList());
         Map<Long,TestVO> map = vos.stream().collect(Collectors.toMap(TestVO::getId,a->a));
-        map.forEach((k,v)->{
-            System.out.println(k+"\t"+v);
-        });
+        map.forEach(Run::accept);
     }
 
     private static List<TestVO> createTestVOs() {
@@ -41,5 +39,9 @@ public class Run {
             vos.add(vo);
         }
         return vos;
+    }
+
+    private static void accept(Long k, TestVO v) {
+        System.out.println(k + "\t" + v);
     }
 }
