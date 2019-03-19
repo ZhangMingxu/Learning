@@ -16,7 +16,7 @@
     <url>http://www.example.com</url>
 
     <properties>
-        <httpclient.version>4.3.3</httpclient.version>
+        <httpclient.version>4.5.7</httpclient.version>
     </properties>
 
     <dependencies>

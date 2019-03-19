@@ -63,8 +63,6 @@ public class FilterStatusDemo {
                 if (files != null && files.length > 0) {
                     for (FileStatus fileStatus : files) {
                         stack.push(fileStatus);
-                        System.out.println("push:" + fileStatus.getPath().toString());
-
                     }
                 } else {
                     System.out.println("空文件夹:" + cur.getPath().toString());
