@@ -18,7 +18,7 @@ import java.io.OutputStream;
 /**
  * @author zhangmingxu ON 22:35 2019-02-20
  **/
-public class HDFSDemo {
+public class HDFSTest {
     private FileSystem client = null;
 
     @Before

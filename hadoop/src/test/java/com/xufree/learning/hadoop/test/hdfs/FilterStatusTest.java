@@ -14,7 +14,7 @@ import java.util.Stack;
 /**
  * @author zhangmingxu ON 17:22 2019-03-15
  **/
-public class FilterStatusDemo {
+public class FilterStatusTest {
     private FileSystem client = null;
 
     @Before

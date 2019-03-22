@@ -1,4 +1,4 @@
-package com.xufree.learning.hadoop.test.hdfs;
+package com.xufree.learning.hadoop.hdfs;
 
 import org.apache.hadoop.fs.FsUrlStreamHandlerFactory;
 import org.apache.hadoop.io.IOUtils;
