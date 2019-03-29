@@ -1,4 +1,4 @@
-package com.xufree.learning.java.algorithm;
+package com.xufree.learning.algorithm;
 
 import java.util.ArrayList;
 import java.util.List;

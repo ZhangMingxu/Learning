@@ -1,4 +1,4 @@
-package com.xufree.learning.java.algorithm.nowcoder.jianzhioffer;
+package com.xufree.learning.algorithm.nowcoder.jianzhioffer;
 
 /**
  * @author zhangmingxu ON 11:27 2019-02-01
