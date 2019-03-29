@@ -3,13 +3,16 @@ package com.xufree.learning.algorithm;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 全排列
+ */
 public class FullPermutation {
     public static void main(String[] args) {
-        String[] strings = new String[]{"哎呀我去", "A", "3","askldjakldjlk"};
+        String[] strings = new String[]{"哎呀我去", "A", "3", "askldjakldjlk"};
         List<String[]> result = f(strings, strings.length - 1);
         for (String[] s : result) {
             for (String s1 : s) {
-                System.out.print(s1+" ");
+                System.out.print(s1 + " ");
             }
             System.out.print("\n");
         }
