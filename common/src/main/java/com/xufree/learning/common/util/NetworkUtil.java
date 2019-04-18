@@ -1,13 +1,5 @@
 package com.xufree.learning.common.util;
 
-
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
-import org.apache.http.impl.client.CloseableHttpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -63,50 +55,6 @@ public class NetworkUtil {
             }
         }
         return ip;
-    }
-
-    /**
-     * 发送POST请求方法
-     */
-    public static String sendPost(String url, String param) {
-        String response = null;
-        logger.info("发送POST请求URL:{}", url);
-        logger.info("发送POST请求Param:{}", param);
-        HttpPost httpPost = new HttpPost(url);
-        try (CloseableHttpClient httpClient = HttpClients.createDefault(); CloseableHttpResponse httpResponse = httpClient.execute(httpPost)) {
-            StringEntity stringEntity = new StringEntity(param, "UTF-8");
-            httpPost.setEntity(stringEntity);
-            httpPost.addHeader("Content-type", "application/json; charset=utf-8");
-            int code = httpResponse.getStatusLine().getStatusCode();
-            response = EntityUtils
-                    .toString(httpResponse.getEntity());
-            logger.info("发送POST请求Response:{}", response);
-            if (code != 200) {
-                return null;
-            }
-        } catch (Exception e) {
-            logger.error("发送POST请求异常", e);
-        }
-        return response;
-    }
-
-    public static String sendGet(String url) {
-        String response = null;
-        logger.info("发送GET请求URL:{}", url);
-        HttpGet httpGet = new HttpGet(url);
-        try (CloseableHttpClient httpClient = HttpClients.createDefault(); CloseableHttpResponse httpResponse = httpClient.execute(httpGet)) {
-            httpGet.addHeader("Content-type", "application/json; charset=utf-8");
-            int code = httpResponse.getStatusLine().getStatusCode();
-            response = EntityUtils
-                    .toString(httpResponse.getEntity());
-            logger.info("发送GET返回结果Response:{}", response);
-            if (code != 200) {
-                return null;
-            }
-        } catch (Exception e) {
-            logger.error("发送GET请求异常", e);
-        }
-        return response;
     }
 
 }
