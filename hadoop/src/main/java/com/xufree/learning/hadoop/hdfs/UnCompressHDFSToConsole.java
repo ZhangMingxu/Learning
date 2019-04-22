@@ -21,10 +21,9 @@ import java.io.InputStream;
  **/
 public class UnCompressHDFSToConsole {
     public static void main(String[] args) throws IOException {
-        Configuration conf = new Configuration();
-        conf.set("fs.defaultFS", "hdfs://localhost:9000");
-        FileSystem client = FileSystem.newInstance(conf);
+        FileSystem client = HDFSClient.getClient();
         Path inputPath = new Path("/output/LogAnalyseWithCompression/part-r-00000.gz");
+        Configuration conf = HDFSClient.getConfiguration();
         InputStream inputStream = client.open(inputPath);
         //获取压缩算法
         CompressionCodecFactory compressionCodecFactory = new CompressionCodecFactory(conf);
