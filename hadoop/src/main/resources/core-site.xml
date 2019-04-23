@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+    <property>
+        <name>fs.defaultFS</name>
+        <value>hdfs://zhangmingxudeMacBook-Pro.local:9000</value>
+    </property>
+    <property>
+        <name>hadoop.tmp.dir</name>
+        <value>/Users/zhangmingxu/Hadoop/3.1.1/tmp</value>
+    </property>
+</configuration>

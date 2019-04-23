@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+    <property>
+        <name>yarn.resourcemanager.hostname</name>
+        <value>zhangmingxudeMacBook-Pro.local</value>
+    </property>
+    <property>
+        <name>yarn.nodemanager.aux-services</name>
+        <value>mapreduce_shuffle</value>
+    </property>
+    <property>
+        <name>yarn.application.classpath</name>
+        <value>
+            /Users/zhangmingxu/Hadoop/3.1.1/etc/hadoop:/Users/zhangmingxu/Hadoop/3.1.1/share/hadoop/common/lib/*:/Users/zhangmingxu/Hadoop/3.1.1/share/hadoop/common/*:/Users/zhangmingxu/Hadoop/3.1.1/share/hadoop/hdfs:/Users/zhangmingxu/Hadoop/3.1.1/share/hadoop/hdfs/lib/*:/Users/zhangmingxu/Hadoop/3.1.1/share/hadoop/hdfs/*:/Users/zhangmingxu/Hadoop/3.1.1/share/hadoop/mapreduce/lib/*:/Users/zhangmingxu/Hadoop/3.1.1/share/hadoop/mapreduce/*:/Users/zhangmingxu/Hadoop/3.1.1/share/hadoop/yarn:/Users/zhangmingxu/Hadoop/3.1.1/share/hadoop/yarn/lib/*:/Users/zhangmingxu/Hadoop/3.1.1/share/hadoop/yarn/*
+        </value>
+    </property>
+</configuration>
