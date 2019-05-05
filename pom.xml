@@ -16,6 +16,7 @@
         <module>flink</module>
         <module>hive</module>
         <module>algorithm</module>
+        <module>spring</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
