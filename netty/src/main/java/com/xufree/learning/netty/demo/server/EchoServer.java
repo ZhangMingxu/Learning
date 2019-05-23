@@ -1,4 +1,4 @@
-package com.xufree.learning.netty.demo;
+package com.xufree.learning.netty.demo.server;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
