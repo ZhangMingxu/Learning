@@ -55,6 +55,7 @@ public class EchoServerHandler extends ChannelHandlerAdapter {
         String[] strings = s.split(" ");
         if (strings.length != 2) {
             sendMessage(ctx, "命令格式错误");
+            return;
         }
         String to = strings[0];
         String message = strings[1];
