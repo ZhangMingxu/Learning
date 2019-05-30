@@ -6,7 +6,10 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * 本地缓存
@@ -21,8 +24,8 @@ public class LocalCache {
 
     private final Map<String, Value> cache;
     private final int maxNumber;
-    //并发控制器，很重要，防止高并发下本地缓存对象个数超过MAX_NUMBER
-    private final AtomicInteger curNum = new AtomicInteger(0);
+    private final Lock lock = new ReentrantLock();
+    private final AtomicInteger a = new AtomicInteger(0);
 
     /**
      * 使用默认最大对象数100
@@ -50,20 +53,23 @@ public class LocalCache {
             logger.error("本地缓存put参数异常");
             return false;
         }
-        //这里需要控制并发 否则最大容量控制不住 多线程下会存大于MAX_NUMBER的对象 有OOM风险
-        //先把个数增加上去 如果添加失败再减下来 相当于加锁了 避免使用同步或者直接锁提高性能
-        curNum.incrementAndGet();
-        if (isOver()) { //判断是否需要过期
-            expireAll(); //触发一次全量过期
-            if (isOver()) { //二次检查
-                logger.error("本地缓存put时全量过期后还没有空间");
-                //添加失败再减下来
-                curNum.decrementAndGet();
-                return false;
-            }
+        if (!lock.tryLock()) {
+            a.incrementAndGet();
+            return false;
         }
-        putValue(key, value, expire);
-        return true;
+        try {
+            if (isOver()) { //判断是否需要过期
+                expireAll(); //触发一次全量过期
+                if (isOver()) { //二次检查
+                    logger.error("本地缓存put时全量过期后还没有空间");
+                    return false;
+                }
+            }
+            putValue(key, value, expire);
+            return true;
+        } finally {
+            lock.unlock();
+        }
     }
 
     /**
@@ -107,12 +113,11 @@ public class LocalCache {
 
     private void removeValue(String key) {
         cache.remove(key);
-        curNum.decrementAndGet();
     }
 
 
     private boolean isOver() {
-        return curNum.get() > maxNumber;
+        return cache.size() >= maxNumber;
     }
 
     private static class Value {
@@ -125,5 +130,25 @@ public class LocalCache {
             this.expire = expire;
             this.value = value;
         }
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        long start = System.currentTimeMillis();
+        LocalCache localCache = new LocalCache();
+        int n = 5;
+        int m = 100;
+        CountDownLatch count = new CountDownLatch(n);
+        for (int i = 0; i < n; i++) {
+            new Thread(() -> {
+                for (int j = 0; j < m; j++) {
+                    localCache.put(j + "", new Object(), 10);
+                }
+                count.countDown();
+            }).start();
+        }
+        count.await();
+        System.out.println(localCache.cache.size());
+        System.out.println("耗时  " + (System.currentTimeMillis() - start));
+        System.out.println("总共put " + (n * m) + "失败  " + localCache.a);
     }
 }

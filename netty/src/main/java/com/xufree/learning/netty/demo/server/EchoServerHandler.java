@@ -23,7 +23,7 @@ public class EchoServerHandler extends ChannelHandlerAdapter {
     private static final Map<String, ChannelHandlerContext> clientMap = new ConcurrentHashMap<>();
 
     @Override
-    public void channelRegistered(ChannelHandlerContext ctx) throws Exception {
+    public void channelRegistered(ChannelHandlerContext ctx) {
         String clientId = getId(ctx);
         System.out.println("clientId=" + clientId + " Registered");
         clientMap.put(clientId, ctx);
@@ -33,7 +33,7 @@ public class EchoServerHandler extends ChannelHandlerAdapter {
 
 
     @Override
-    public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
+    public void channelUnregistered(ChannelHandlerContext ctx) {
         String clientId = getId(ctx);
         System.out.println("clientId=" + clientId + " Unregistered");
         clientMap.remove(clientId);
@@ -62,9 +62,9 @@ public class EchoServerHandler extends ChannelHandlerAdapter {
         speakTo(getId(ctx), to, message);
     }
 
-    /**
-     * 通知ChannelInboundHandler最后一次对channel-Read()的调用是当前批量读取中的最后一条消息
-     */
+//    /**
+//     * 通知ChannelInboundHandler最后一次对channel-Read()的调用是当前批量读取中的最后一条消息
+//     */
 //    @Override
 //    public void channelReadComplete(ChannelHandlerContext ctx) {
 //        ctx.writeAndFlush(Unpooled.EMPTY_BUFFER); //消息统一发送
@@ -109,7 +109,13 @@ public class EchoServerHandler extends ChannelHandlerAdapter {
     }
 
     private void sendMessage(ChannelHandlerContext client, String message) {
-        client.writeAndFlush(Unpooled.copiedBuffer(message + "\n", CharsetUtil.UTF_8));
+        ChannelFuture channelFuture = client.writeAndFlush(Unpooled.copiedBuffer(message + "\n", CharsetUtil.UTF_8));
+        //增加监听 判断是否写成功了
+        channelFuture.addListener((ChannelFutureListener) future -> {
+            if (!future.isSuccess()){ //如果没有成功 输出错误
+                future.cause().printStackTrace();
+            }
+        });
     }
 
     private String getId(ChannelHandlerContext ctx) {
