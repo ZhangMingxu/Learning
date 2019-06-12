@@ -119,7 +119,7 @@ public class LocalCache {
         cur.incrementAndGet();
     }
 
-    private synchronized void decr() {
+    private void decr() {
         cur.decrementAndGet();
     }
 
