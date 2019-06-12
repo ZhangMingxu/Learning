@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -25,7 +24,6 @@ public class LocalCache {
     private final Map<String, Value> cache;
     private final int maxNumber;
     private final Lock lock = new ReentrantLock();
-    private final AtomicInteger a = new AtomicInteger(0);
 
     /**
      * 使用默认最大对象数100
@@ -54,7 +52,6 @@ public class LocalCache {
             return false;
         }
         if (!lock.tryLock()) {
-            a.incrementAndGet();
             return false;
         }
         try {
@@ -68,7 +65,7 @@ public class LocalCache {
             putValue(key, value, expire);
             return true;
         } finally {
-            lock.unlock();
+            //lock.unlock();
         }
     }
 
@@ -135,8 +132,8 @@ public class LocalCache {
     public static void main(String[] args) throws InterruptedException {
         long start = System.currentTimeMillis();
         LocalCache localCache = new LocalCache();
-        int n = 5;
-        int m = 100;
+        int n = 5; //线程数
+        int m = 100; //每个线程put个数
         CountDownLatch count = new CountDownLatch(n);
         for (int i = 0; i < n; i++) {
             new Thread(() -> {
@@ -149,6 +146,5 @@ public class LocalCache {
         count.await();
         System.out.println(localCache.cache.size());
         System.out.println("耗时  " + (System.currentTimeMillis() - start));
-        System.out.println("总共put " + (n * m) + "失败  " + localCache.a);
     }
 }
