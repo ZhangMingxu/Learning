@@ -65,7 +65,7 @@ public class LocalCache {
             putValue(key, value, expire);
             return true;
         } finally {
-            //lock.unlock();
+            lock.unlock();
         }
     }
 
