@@ -19,7 +19,7 @@ import java.util.concurrent.ConcurrentHashMap;
  **/
 //标记一个ChannelHandler可以被多个Channel安全的共享
 @ChannelHandler.Sharable
-public class EchoServerHandler extends ChannelHandlerAdapter {
+public class EchoServerHandler extends SimpleChannelInboundHandler<String> {
     private static final Map<String, ChannelHandlerContext> clientMap = new ConcurrentHashMap<>();
 
     @Override
@@ -43,23 +43,29 @@ public class EchoServerHandler extends ChannelHandlerAdapter {
     /**
      * 对于每个传入的消息都要调用
      */
+//    @Override
+//    public void channelRead(ChannelHandlerContext ctx, Object msg) {
+//
+//    }
+
     @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) {
-        ByteBuf in = (ByteBuf) msg;
-        String s = in.toString(CharsetUtil.UTF_8);
-        if (s.equals("exit\r\n")) {
-            sendMessage(ctx, "再见");
-            ctx.close();
-            return;
-        }
-        String[] strings = s.split(" ");
-        if (strings.length != 2) {
-            sendMessage(ctx, "命令格式错误");
-            return;
-        }
-        String to = strings[0];
-        String message = strings[1];
-        speakTo(getId(ctx), to, message);
+    protected void messageReceived(ChannelHandlerContext ctx, String msg) throws Exception {
+        System.out.println("messageReceived" + msg);
+//        ByteBuf in = (ByteBuf) msg;
+//        String s = in.toString(CharsetUtil.UTF_8);
+//        if (s.equals("exit\r\n")) {
+//            sendMessage(ctx, "再见");
+//            ctx.close();
+//            return;
+//        }
+//        String[] strings = s.split(" ");
+//        if (strings.length != 2) {
+//            sendMessage(ctx, "命令格式错误");
+//            return;
+//        }
+//        String to = strings[0];
+//        String message = strings[1];
+//        speakTo(getId(ctx), to, message);
     }
 
 //    /**
@@ -112,7 +118,7 @@ public class EchoServerHandler extends ChannelHandlerAdapter {
         ChannelFuture channelFuture = client.writeAndFlush(Unpooled.copiedBuffer(message + "\n", CharsetUtil.UTF_8));
         //增加监听 判断是否写成功了
         channelFuture.addListener((ChannelFutureListener) future -> {
-            if (!future.isSuccess()){ //如果没有成功 输出错误
+            if (!future.isSuccess()) { //如果没有成功 输出错误
                 future.cause().printStackTrace();
             }
         });
