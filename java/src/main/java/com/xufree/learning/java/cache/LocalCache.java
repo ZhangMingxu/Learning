@@ -50,7 +50,9 @@ public class LocalCache {
             logger.error("本地缓存put参数异常");
             return false;
         }
-        incr();
+        if (!incr()) {
+            return false;
+        }
         if (isOver()) { //判断是否需要过期
             expireAll(); //触发一次全量过期
             if (isOver()) { //二次检查
@@ -115,12 +117,22 @@ public class LocalCache {
         return cur.get() > maxNumber;
     }
 
-    private void incr() {
-        cur.incrementAndGet();
+    private boolean incr() {
+        int c = cur.get();
+        return cur.compareAndSet(c, ++c);
     }
 
     private void decr() {
-        cur.decrementAndGet();
+        for (; ; ) {
+            int c = cur.get();
+            if (c == 0) {
+                logger.error("LocalCache decr cur is 0");
+                return;
+            }
+            if (cur.compareAndSet(c, --c)) {
+                return;
+            }
+        }
     }
 
     private static class Value {
@@ -138,7 +150,7 @@ public class LocalCache {
     public static void main(String[] args) throws InterruptedException {
         long start = System.currentTimeMillis();
         LocalCache localCache = new LocalCache();
-        int n = 100; //线程数
+        int n = 500; //线程数
         int m = 100000; //每个线程put个数
         CountDownLatch count = new CountDownLatch(n);
         for (int i = 0; i < n; i++) {
