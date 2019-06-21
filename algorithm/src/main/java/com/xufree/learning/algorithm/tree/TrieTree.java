@@ -1,8 +1,7 @@
 package com.xufree.learning.algorithm.tree;
 
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 字典树
@@ -45,7 +44,7 @@ public class TrieTree {
      */
     public boolean contains(String value) {
         if (value == null) {
-            throw new NullPointerException();
+            throw new IllegalArgumentException("value can not be null");
         }
         char[] chars = getChars(value);
         Node cur = heads.get(chars[0]);
@@ -60,6 +59,35 @@ public class TrieTree {
         }
         return cur.isEnd;
     }
+
+    public void match(String text) {
+        if (text == null) {
+            throw new IllegalArgumentException("text can not be null");
+        }
+        char[] chars = text.toCharArray();
+        for (int i = 0; i < chars.length; i++) {
+            match(chars, i, chars.length);
+        }
+    }
+
+    private void match(char[] chars, int begin, int end) {
+        char first = chars[begin];
+        Node cur = null;
+        for (int i = begin; i < end; i++) {
+            if (i == begin) {
+                cur = heads.get(first);
+            } else {
+                cur = cur.children.get(chars[i]);
+            }
+            if (cur == null) {
+                return;
+            }
+            if (cur.isEnd) {
+//                System.out.println(true);
+            }
+        }
+    }
+
 
     /**
      * 获取某一个父节点的子节点
@@ -125,6 +153,9 @@ public class TrieTree {
     }
 
     public static void main(String[] args) {
+        int n = 10000000;
+        String s1 = "张明旭阿克琉斯就到了卡觉得卡拉胶苏里科夫哈哈弗兰克和你分开见多识广分开就撒谎的逻辑卡收费的";
+        String s2 = "a克赖斯基让他赶快来发手机看了好几份但是看了就赶快来健身房链接看动画kkk给 i 前后克里斯蒂哈来个合适的空间啊帅哥短裤家居服；看了哈空间的风格";
         TrieTree tree = new TrieTree();
         tree.put("asd");
         tree.put("张明旭");
@@ -133,9 +164,34 @@ public class TrieTree {
         tree.put("dsa");
         tree.put("kkk");
         tree.put("a");
-        System.out.println(tree.contains("asdqqq"));
-        System.out.println(tree.contains("张明旭"));
-        System.out.println(tree.contains("张明旭1"));
-        System.out.println(tree.contains("a"));
+//        System.out.println(tree.contains("asdqqq"));
+//        System.out.println(tree.contains("张明旭"));
+//        System.out.println(tree.contains("张明旭1"));
+//        System.out.println(tree.contains("a"));
+        long treeBegin = System.currentTimeMillis();
+        for (int i = 0; i < n; i++) {
+            tree.match(s1);
+            tree.match(s2);
+        }
+        System.out.println("tree use " + (System.currentTimeMillis() - treeBegin));
+        Set<String> set = new HashSet<>();
+        set.add("asd");
+        set.add("张明旭");
+        set.add("asdasd");
+        set.add("张明旭1");
+        set.add("dsa");
+        set.add("kkk");
+        set.add("a");
+        long setBegin = System.currentTimeMillis();
+        for (int i = 0; i < n; i++) {
+            for (String s : set) {
+                s1.contains(s);
+            }
+            for (String s : set) {
+                s2.contains(s);
+            }
+        }
+        System.out.println("set use " + (System.currentTimeMillis() - setBegin));
+
     }
 }
