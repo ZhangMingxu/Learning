@@ -1,0 +1,3 @@
+Manifest-Version: 1.0
+Class-Path: javassist-3.23.1-GA.jar
+Premain-Class: com.xufree.learning.java.agent.Runing
