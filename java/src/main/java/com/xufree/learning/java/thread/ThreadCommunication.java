@@ -28,12 +28,12 @@ public class ThreadCommunication {
         TimeUnit.SECONDS.sleep(2);
 
         new Thread(() -> {
-//            lock.lock();
+            lock.lock();
             try {
                 System.out.println("start signal");
                 flag.signal();//发送通知
             } finally {
-//                lock.unlock();
+                lock.unlock();
             }
         }).start();
     }
