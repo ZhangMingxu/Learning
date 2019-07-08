@@ -1,4 +1,4 @@
-package com.xufree.learning.java.thread;
+package com.xufree.learning.java.concurrent;
 
 import java.util.HashMap;
 

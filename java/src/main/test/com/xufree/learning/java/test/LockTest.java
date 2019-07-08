@@ -1,13 +1,11 @@
 package com.xufree.learning.java.test;
 
 import com.xufree.learning.common.util.SleepUtil;
-import com.xufree.learning.java.thread.ShareLock;
+import com.xufree.learning.java.concurrent.ShareLock;
 import org.junit.Test;
 
-import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.stream.Collectors;
 
 public class LockTest {
     @Test

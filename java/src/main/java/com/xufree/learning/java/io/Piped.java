@@ -1,4 +1,4 @@
-package com.xufree.learning.java.thread;
+package com.xufree.learning.java.io;
 
 import java.io.IOException;
 import java.io.PipedReader;
