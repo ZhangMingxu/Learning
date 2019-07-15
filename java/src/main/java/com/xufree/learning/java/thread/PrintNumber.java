@@ -208,7 +208,7 @@ public class PrintNumber {
      */
     private static void printC() {
         int[] arrayA = {1, 2, 3};
-        int[] arrayB = {1, 2, 3, 4, 5};
+        int[] arrayB = {1, 2, 3, 4, 5, 6, 7};
         int[] arrayC = {1, 2, 3, 4, 5, 6};
         LinkedList<WorkerThread> list = new LinkedList<>();
         Lock lock = new ReentrantLock();
@@ -241,6 +241,8 @@ public class PrintNumber {
         //通知最后一次输出退出循环
         lock.lock();
         try {
+            threadA.condition.signal();
+            threadB.condition.signal();
             threadC.condition.signal();
         } finally {
             lock.unlock();
