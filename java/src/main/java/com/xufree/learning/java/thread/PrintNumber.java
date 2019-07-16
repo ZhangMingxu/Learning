@@ -15,7 +15,9 @@ public class PrintNumber {
     public static void main(String[] args) throws InterruptedException {
 //        printA();
 //        printB();
-        printC();
+//        printC();
+//        printD();
+//        printF();
     }
 
     /**
@@ -246,6 +248,180 @@ public class PrintNumber {
             threadC.condition.signal();
         } finally {
             lock.unlock();
+        }
+    }
+
+    /**
+     * 三个线程，打印同一个数组，按顺序轮流
+     * 和B的区别是使用一个Object对象进行通知
+     */
+    private static void printD() {
+        Object l = new Object();
+        int[] array = new int[500];
+        for (int i = 0; i < array.length; i++) {
+            array[i] = i;
+        }
+        final AtomicInteger i = new AtomicInteger(0);
+        Thread t1 = new Thread(() -> {
+            while (true) {
+                synchronized (l) {
+                    try {
+                        l.wait();
+                        int x = i.get();
+                        if (x == array.length) {
+                            l.notifyAll();
+                            break;
+                        }
+                        if (x % 3 == 0) {
+                            System.out.println("线程t1==>A" + array[i.getAndIncrement()]);
+                        }
+                        l.notifyAll();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+
+        Thread t2 = new Thread(() -> {
+            while (true) {
+                synchronized (l) {
+                    try {
+                        l.wait();
+                        int x = i.get();
+                        if (x == array.length) {
+                            l.notifyAll();
+                            break;
+                        }
+                        if (x % 3 == 1) {
+                            System.out.println("线程t2==>B" + array[i.getAndIncrement()]);
+                        }
+                        l.notifyAll();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+        });
+
+        Thread t3 = new Thread(() -> {
+            while (true) {
+                synchronized (l) {
+                    try {
+                        l.wait();
+                        int x = i.get();
+                        if (x == array.length) {
+                            l.notifyAll();
+                            break;
+                        }
+                        if (x % 3 == 2) {
+                            System.out.println("线程t3==>C" + array[i.getAndIncrement()]);
+                        }
+                        l.notifyAll();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+        });
+        t1.start();
+        t2.start();
+        t3.start();
+        while (true) {
+            if (t1.getState().equals(Thread.State.WAITING)) {
+                notify(l, "l");
+                return;
+            }
+        }
+    }
+
+    /**
+     * 三个线程，打印同一个数组，按顺序轮流
+     * 和B的区别是使用三个Object对象进行通知
+     */
+    private static void printF() {
+        Object l1 = new Object();
+        Object l2 = new Object();
+        Object l3 = new Object();
+        int[] array = new int[500];
+
+        for (int i = 0; i < array.length; i++) {
+            array[i] = i;
+        }
+        final AtomicInteger i = new AtomicInteger(0);
+        Thread t1 = new Thread(() -> {
+
+            while (true) {
+                synchronized (l1) {
+                    try {
+                        l1.wait();
+                        if (i.get() < array.length) {
+                            System.out.println("A" + array[i.getAndIncrement()]);
+                            notify(l2, "l2");
+                        } else {
+                            notify(l2, "l2");
+                            break;
+                        }
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+
+        Thread t2 = new Thread(() -> {
+            while (true) {
+                synchronized (l2) {
+                    try {
+                        l2.wait();
+                        if (i.get() < array.length) {
+                            notify(l3, "l3");
+                        } else {
+                            notify(l3, "l3");
+                            break;
+                        }
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+
+        Thread t3 = new Thread(() -> {
+            while (true) {
+                synchronized (l3) {
+                    try {
+                        l3.wait();
+                        if (i.get() < array.length) {
+                            System.out.println("C" + array[i.getAndIncrement()]);
+                            notify(l1, "l1");
+                        } else {
+                            notify(l1, "l1");
+                            break;
+                        }
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+        });
+        t1.start();
+        t2.start();
+        t3.start();
+        while (true) {
+            if (t1.getState().equals(Thread.State.WAITING)) {
+                notify(l1, "l1");
+                return;
+            }
+        }
+    }
+
+    private static void notify(Object lock, String name) {
+        synchronized (lock) {
+            lock.notify();
         }
     }
 
