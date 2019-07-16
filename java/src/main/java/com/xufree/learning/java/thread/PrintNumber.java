@@ -13,7 +13,7 @@ import java.util.concurrent.locks.ReentrantLock;
  **/
 public class PrintNumber {
     public static void main(String[] args) throws InterruptedException {
-//        printA();
+        printA();
 //        printB();
 //        printC();
 //        printD();
@@ -56,7 +56,7 @@ public class PrintNumber {
             count.countDown();
         }, "A").start();
         new Thread(() -> {
-            String[] array = {"B1", "B2", "B3", "B4"};
+            String[] array = {"B1", "B2", "B3"};
             int i = 0;
             while (true) {
                 if (i == array.length) {
