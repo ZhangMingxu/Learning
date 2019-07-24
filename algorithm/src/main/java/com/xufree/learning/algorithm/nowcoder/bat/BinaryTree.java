@@ -61,8 +61,8 @@ public class BinaryTree {
             return;
         }
         Queue<Node> q = new LinkedBlockingQueue<>();
-        Node last = head;
-        Node cur = head;
+        Node last = head; //当前行尾节点
+        Node cur = head; //下一行尾节点
         Node nlast = last;
         while (cur != null) {
             if (cur.left != null) {
@@ -73,7 +73,7 @@ public class BinaryTree {
                 q.add(cur.right);
                 nlast = cur.right;
             }
-            if (cur == last) {
+            if (cur == last) { //如果到了这一行结尾
                 System.out.println(cur.data); //换行
                 last = nlast;
             } else {
