@@ -11,8 +11,8 @@ public class StringAction {
     /**
      * 暴力模式判断是否存在
      *
-     * @param source 被包含
-     * @param target 包含
+     * @param source 包含
+     * @param target 被包含
      * @return 是否包含
      */
     private static boolean contains(String source, String target) {
@@ -44,8 +44,8 @@ public class StringAction {
     /**
      * KMP算法判断是否存在
      *
-     * @param source 被包含
-     * @param target 包含
+     * @param source 包含
+     * @param target 被包含
      * @return 是否包含
      */
     private static boolean containsWithKMP(String source, String target) {
