@@ -3,7 +3,7 @@ package com.xufree.learning.algorithm.nowcoder.bat;
 /**
  * @author zhangmingxu ON 16:36 2019-07-24
  **/
-public class StringAction {
+public class StringInAction {
     public static void main(String[] args) {
         System.out.println(contains("asdasdasd", "asd"));
     }

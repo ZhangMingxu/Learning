@@ -5,7 +5,7 @@ import java.util.LinkedList;
 /**
  * @author zhangmingxu ON 13:54 2019-07-17
  **/
-public class LinkedListAction {
+public class LinkedListInAction {
 
     public static void main(String[] args) {
         LinkedList<Integer> linkedList = new LinkedList<>();
