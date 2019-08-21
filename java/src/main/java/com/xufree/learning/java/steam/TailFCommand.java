@@ -45,7 +45,7 @@ public class TailFCommand {
     }
 
     //不需要回车
-    private static void startListenNoEnty(){
+    private static void startListenNoEntry(){
         Thread thread = new Thread(()->{
 
         });
