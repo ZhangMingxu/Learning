@@ -1,4 +1,4 @@
-package com.xufree.learning.java.steam;
+package com.xufree.learning.java.io;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -20,21 +20,21 @@ public class TailFCommand {
         InputStream in = new FileInputStream(inputPath);
         int len;
         byte[] buffer = new byte[4096];
-        while (flag){
-            len=in.read(buffer);
-            if (len!=-1) {
+        while (flag) {
+            len = in.read(buffer);
+            if (len != -1) {
                 System.out.write(buffer, 0, len);
             }
         }
     }
 
-    private  static void startListen(){
-        Thread thread = new Thread(()->{
+    private static void startListen() {
+        Thread thread = new Thread(() -> {
             Scanner scanner = new Scanner(System.in);
-            while (flag){
+            while (flag) {
                 String command = scanner.next();
-                if (StringUtils.isNotBlank(command)){
-                    if ("exit".equals(command.toLowerCase())){
+                if (StringUtils.isNotBlank(command)) {
+                    if ("exit".equals(command.toLowerCase())) {
                         flag = false;
                     }
                 }
@@ -45,8 +45,8 @@ public class TailFCommand {
     }
 
     //不需要回车
-    private static void startListenNoEntry(){
-        Thread thread = new Thread(()->{
+    private static void startListenNoEntry() {
+        Thread thread = new Thread(() -> {
 
         });
         thread.setDaemon(true);
