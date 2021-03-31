@@ -33,7 +33,7 @@
         <commons-lang3.version>3.7</commons-lang3.version>
         <servlet.version>3.1.0</servlet.version>
         <aspect.version>1.9.1</aspect.version>
-        <guava.version>26.0-jre</guava.version>
+        <guava.version>29.0-jre</guava.version>
         <fastjson.version>1.2.56</fastjson.version>
         <!--插件版本-->
         <maven-enforcer-plugin.version>1.2</maven-enforcer-plugin.version>
