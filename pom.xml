@@ -29,7 +29,7 @@
         <junit.version>4.12</junit.version>
         <spring.version>5.1.5.RELEASE</spring.version>
         <slf4j.version>1.7.25</slf4j.version>
-        <log4j.version>2.9.1</log4j.version>
+        <log4j.version>2.16.0</log4j.version>
         <commons-lang3.version>3.7</commons-lang3.version>
         <servlet.version>3.1.0</servlet.version>
         <aspect.version>1.9.1</aspect.version>
